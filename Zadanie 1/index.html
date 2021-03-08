@@ -10,12 +10,12 @@
 <input type="email" id="email" name="email"
        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
 <br>
-<label>Kod pocztowy 1 (Polski): </label>
-<input type="text" id="kodpocztowy1" name="kodpocztowy1"
+<label>Kod pocztowy 1: </label>
+<input type="text" id="kodpocztowy" name="kodpocztowy"
        pattern="[0-9]{2}-[0-9]{3}">
 <br>
-<label>Kod pocztowy 2 (Włoski): </label>
-<input type="text" id="kodpocztowy2" name="kodpocztowy2"
+<label>Numer identyfikacji podatkowej (z kreskami): </label>
+<input type="text" id="nip" name="nip"
        pattern="[0-9]{5}">
 <br>
 
@@ -30,6 +30,16 @@
 <br>
 <label>url: </label>
 <input type="url" id="site" name="site">
+<br>
+
+<label>Ipv6: </label>
+<input type="text" id="ipv6" name="adresipv6"
+       pattern="((^|:)([0-9a-fA-F]{0,4})){1,8}$">
+<br>
+
+<label>Telefon: </label>
+<input type="tel" id="phone" name="phone"
+pattern="[0-9]{9}">
 <br>
 </body>
 </html>
