@@ -89,12 +89,12 @@
 <!--2-->
 <label for="date">Wybierz dzień roboczy:</label>
 <input type="date" id="roboczy" name="roboczy"
-min="2021-03-15" max="2021-03-19"
+       min="2021-03-15" max="2021-03-19"
        required>
 <br>
 
 <label for="appt12">Wybierz czas (12h):</label>
-<input type="time" id="appt12" name="appt12" required>
+<input type="text" id="appt12" name="appt12" pattern="(0[0-9]|1[0-1]):[0-5][0-9](\s)(AM|PM|am|pm)" placeholder="11:30 AM" required>
 </body>
 <br>
 <label for="appt">Wybierz czas (24h):</label>
