@@ -42,13 +42,13 @@ placeholder="https://www.html5pattern.com/Miscs" style="width: 300px" pattern="(
 
 <!--7a-->
 <label>katalog małe litery: </label>
-<input type="text" id="disc" name="disc" pattern="^[a-zA-Z]:\\(windows|winnt|win|dos|msdos)\\?[a-z]*" placeholder="c:\test" style="width: 300px">
+<input type="text" id="disc" name="disc" pattern="^[a-zA-Z]:\\(windows|winnt|win|dos|msdos)\\?[a-z]*" placeholder="C:\windows\temp" style="width: 300px">
 <br>
 
 <!--7b-->
 <label>katalog obie wielkosci liter: </label>
 <input type="text" id="disc2" name="disc2" pattern=^[a-zA-Z]:\\([Ww][Ii][Nn][Dd][Oo][Ww][Ss]|[Ww][Ii][Nn][Nn][Tt]|[Ww][Ii][Nn]|[Dd][Oo][Ss]|[Mm][Ss][Dd][Oo][Ss])\\?[a-zA-Z]*"
-placeholder="C:\tESt" style="width: 300px">
+placeholder="c:\wINdoWS\tEMp" style="width: 300px">
 <br>
 
 <!--8-->
@@ -74,9 +74,18 @@ placeholder="123456789">
 
 
 <!--zadanie 2 -->
-<label for="date">Start date:</label>
+<!--1-->
+<label for="date">Wybierz datę:</label>
 
 <input type="date" id="date" name="date"
+       value="2018-07-22"
+       min="2018-01-01" max="2018-12-31">
+</body>
+<br>
+
+<!--2-->
+<label for="date">Wybierz dzień roboczy:</label>
+<input type="date" id="roboczy" name="roboczy"
        value="2018-07-22"
        min="2018-01-01" max="2018-12-31">
 </body>
