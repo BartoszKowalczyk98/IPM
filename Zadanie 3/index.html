@@ -21,7 +21,7 @@
         return color;
     }
 
-    var width, height, stage, layer;
+    var width, height, stage, layer, group;
     window.onload = function () {
         width = window.innerWidth;
         height = window.innerHeight * 0.8;
@@ -32,26 +32,33 @@
             height: height,
         });
 
+        group = new Konva.Group({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            draggable: true,
+        });
+
         layer = new Konva.Layer();
 
         stage.add(layer);
-         layer.on('dragmove', function (e) {
-        var target = e.target;
-        var targetRect = e.target.getClientRect();
-        layer.children.each(function (group) {
-            // do not check intersection with itself
-            if (group === target) {
-                return;
-            }
-            if (haveIntersection(group.getClientRect(), targetRect)) {
-                group.findOne('.fillShape').fill('red');
-            } else {
-                group.findOne('.fillShape').fill('grey');
-            }
-            // do not need to call layer.draw() here
-            // because it will be called by dragmove action
+        layer.on('dragmove', function (e) {
+            var target = e.target;
+            var targetRect = e.target.getClientRect();
+            layer.children.each(function (group) {
+                // do not check intersection with itself
+                if (group === target) {
+                    return;
+                }
+                if (haveIntersection(group.getClientRect(), targetRect)) {
+                    console.log("kolizja")
+                } else {
+                    console.log("gut")
+
+                }
+                // do not need to call layer.draw() here
+                // because it will be called by dragmove action
+            });
         });
-    });
     }
 
     function createBlock() {
@@ -75,12 +82,11 @@
         box.on('mouseout', function () {
             document.body.style.cursor = 'default';
         });
-
+        group.add(box)
         layer.add(box);
 
         layer.draw()
     }
-
 
 
     function haveIntersection(r1, r2) {
