@@ -6,17 +6,35 @@
 </head>
 <body>
 
-<canvas id="myCanvas" style="display: inline-block; width:80%; height:100%; border:1px solid #d3d3d3;">
+<canvas id="myCanvas" style="display: inline-block; width:100%; height:100%; border:1px solid #d3d3d3;">
     Your browser does not support the HTML canvas tag.
 </canvas>
 
 <button onclick="createBlock()" style="display: inline-block; width: 20%;">Generuj klocek</button>
 <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.draggable = true;
+        ctx.id="klocek"
+        ctx.fillRect(10, 10, 20, 15);
+
+        // Get the element by id
+        const element = document.getElementById("klocek");
+        // Add the ondragstart event listener
+        element.addEventListener("dragstart", dragstart_handler);
+    });
+
     function createBlock() {
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
-
+        ctx.draggable = true;
+        ctx.id="klocek"
         ctx.fillRect(10, 10, 20, 15);
+    }
+
+    function dragstart_handler(ev) {
+        ev.dataTransfer.dropEffect = "move";
     }
 </script>
 
