@@ -1,41 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://unpkg.com/konva@7.2.5/konva.min.js"></script>
+
     <meta charset="UTF-8">
     <title>Zadanie 3 IPM</title>
 </head>
 <body>
 
-<canvas id="myCanvas" style="display: inline-block; width:100%; height:100%; border:1px solid #d3d3d3;">
+<!--<canvas id="myCanvas" style="display: inline-block; width:100%; height:100%; border:1px solid #d3d3d3;">
     Your browser does not support the HTML canvas tag.
-</canvas>
-
+</canvas>-->
+<div id="myCanvas" style="display: inline-block; width:80%; height:80%; border:1px solid #d3d3d3;"></div>
 <button onclick="createBlock()" style="display: inline-block; width: 20%;">Generuj klocek</button>
 <script>
-    window.addEventListener('DOMContentLoaded', () => {
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        ctx.draggable = true;
-        ctx.id="klocek"
-        ctx.fillRect(10, 10, 20, 15);
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 
-        // Get the element by id
-        const element = document.getElementById("klocek");
-        // Add the ondragstart event listener
-        element.addEventListener("dragstart", dragstart_handler);
-    });
 
     function createBlock() {
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        ctx.draggable = true;
-        ctx.id="klocek"
-        ctx.fillRect(10, 10, 20, 15);
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+
+        var stage = new Konva.Stage({
+            container: 'myCanvas',
+            width: width,
+            height: height,
+        });
+        var rectX = stage.width() / 2 - 50;
+        var rectY = stage.height() / 2 - 25;
+        var color = getRandomColor();
+        var box = new Konva.Rect({
+            x: rectX,
+            y: rectY,
+            width: 50,
+            height: 50,
+            fill: color,
+            stroke: 'black',
+            strokeWidth: 4,
+            draggable: true,
+        });
+        box.on('mouseover', function () {
+            document.body.style.cursor = 'pointer';
+        });
+        box.on('mouseout', function () {
+            document.body.style.cursor = 'default';
+        });
+
+
+        var layer = new Konva.Layer();
+        layer.add(box);
+        stage.add(layer);
     }
 
-    function dragstart_handler(ev) {
-        ev.dataTransfer.dropEffect = "move";
-    }
+
 </script>
 
 </body>
