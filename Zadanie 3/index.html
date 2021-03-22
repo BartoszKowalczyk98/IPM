@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div id="myCanvas" style="display: inline-block; width:80%; height:80%; border:1px solid #d3d3d3;"></div>
+<div id="myCanvas" style="display: inline-block; width:80%; height:80%; "></div>
 <button onclick="createBlock()" style="display: inline-block; width: 20%;">Generuj klocek</button>
 <script>
     function getRandomColor() {
@@ -23,7 +23,7 @@
 
     var width, height, stage, layer, group;
     window.onload = function () {
-        width = window.innerWidth;
+        width = window.innerWidth*0.9;
         height = window.innerHeight * 0.8;
 
         stage = new Konva.Stage({
@@ -53,13 +53,22 @@
                     console.log("kolizja")
                 } else {
                     console.log("gut")
-
                 }
                 // do not need to call layer.draw() here
                 // because it will be called by dragmove action
             });
         });
+        var floor = new Konva.Rect({
+            y: height-50,
+            width: width,
+            height: 50,
+            fill: 'black',
+            strokeWidth: 4,
+        });
+        layer.add(floor);
+        layer.draw()
     }
+
 
     function createBlock() {
 
