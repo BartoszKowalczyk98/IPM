@@ -21,7 +21,7 @@
         return color;
     }
 
-    var width, height, stage, layer, group;
+    var width, height, stage, layer, group,floor;
     window.onload = function () {
         width = window.innerWidth*0.9;
         height = window.innerHeight * 0.8;
@@ -58,7 +58,7 @@
                 // because it will be called by dragmove action
             });
         });
-        var floor = new Konva.Rect({
+        floor = new Konva.Rect({
             y: height-50,
             width: width,
             height: 50,
@@ -68,7 +68,17 @@
         layer.add(floor);
         layer.draw()
     }
-
+    window.onresize = function () {
+        width = window.innerWidth*0.9;
+        height = window.innerHeight * 0.8;
+        stage.setAttrs({
+            width: width,
+        })
+        floor.setAttrs ({
+            width: width,
+        })
+        layer.draw()
+    }
 
     function createBlock() {
 
