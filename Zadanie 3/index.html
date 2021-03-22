@@ -8,13 +8,11 @@
 </head>
 <body>
 
-<!--<canvas id="myCanvas" style="display: inline-block; width:100%; height:100%; border:1px solid #d3d3d3;">
-    Your browser does not support the HTML canvas tag.
-</canvas>-->
 <div id="myCanvas" style="display: inline-block; width:80%; height:80%; border:1px solid #d3d3d3;"></div>
 <button onclick="createBlock()" style="display: inline-block; width: 20%;">Generuj klocek</button>
 <script>
     function getRandomColor() {
+        //https://stackoverflow.com/questions/1484506/random-color-generator for further reference
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
@@ -22,17 +20,23 @@
         }
         return color;
     }
+    var width,height,stage,layer;
+    window.onload = function (){
+        width = window.innerWidth;
+        height = window.innerHeight*0.8;
 
-
-    function createBlock() {
-        var width = window.innerWidth;
-        var height = window.innerHeight;
-
-        var stage = new Konva.Stage({
+        stage = new Konva.Stage({
             container: 'myCanvas',
             width: width,
             height: height,
         });
+
+       layer = new Konva.Layer();
+
+        stage.add(layer);
+    }
+    function createBlock() {
+
         var rectX = stage.width() / 2 - 50;
         var rectY = stage.height() / 2 - 25;
         var color = getRandomColor();
@@ -53,10 +57,10 @@
             document.body.style.cursor = 'default';
         });
 
-
-        var layer = new Konva.Layer();
         layer.add(box);
+
         stage.add(layer);
+        console.log("test")
     }
 
 
