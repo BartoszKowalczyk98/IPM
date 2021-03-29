@@ -3,6 +3,7 @@ let id;
 let index;
 let indexDrop;
 let list;
+var nrelementu = 6
 
   document.addEventListener("dragstart", ({target}) => {
       dragged = target;
