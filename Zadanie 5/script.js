@@ -20,17 +20,38 @@ const employeeData = [
 var db;
 var request = window.indexedDB.open("newDatabase", 1);
 
-// document.request.onerror = function (event) {
-//     console.log("error: ");
-// };
 
 request.onsuccess = function (event) {
     db = request.result;
     var objectStore = db.transaction("employee").objectStore("employee");
-
+    tableCreate()
     objectStore.openCursor().onsuccess = function (event) {
         var cursor = event.target.result;
-        tableCreate(cursor);
+        if (cursor) {
+            var tbody = document.getElementById('dyntbody')
+            var tr = tbody.insertRow();
+            var td = tr.insertCell();
+            td.appendChild(document.createTextNode(cursor.key))
+            td.style.border = '1px solid black';
+            td.style.minWidth = '50px'
+
+            var td = tr.insertCell();
+            td.appendChild(document.createTextNode(cursor.value.name))
+            td.style.border = '1px solid black';
+            td.style.minWidth = '150px'
+
+            var td = tr.insertCell();
+            td.appendChild(document.createTextNode(cursor.value.age))
+            td.style.border = '1px solid black';
+            td.style.minWidth = '50px'
+
+            var td = tr.insertCell();
+            td.appendChild(document.createTextNode(cursor.value.email))
+            td.style.border = '1px solid black';
+            td.style.minWidth = '300px'
+
+            cursor.continue();
+        }
     };
 };
 
@@ -43,33 +64,26 @@ request.onupgradeneeded = function (event) {
     }
 }
 
-function tableCreate(cursor) {
-    var body = document.body,
-        tbl = document.createElement('table');
+function tableCreate() {
+
+    var body = document.body;
+    var tbl = document.createElement('table');
     tbl.style.width = '100%';
-    if (cursor) {
-        var tr = tbl.insertRow();
-        var td = tr.insertCell();
-        td.appendChild(document.createTextNode(cursor.key))
-        td.style.border = '1px solid black';
-        td.style.width='50px'
+    var thead = document.createElement('thead');
+    var theadtr = thead.insertRow()
+    var theadth = theadtr.insertCell()
+    theadth.appendChild(document.createTextNode('id'))
+    theadth = theadtr.insertCell()
+    theadth.appendChild(document.createTextNode('name'))
+    theadth = theadtr.insertCell()
+    theadth.appendChild(document.createTextNode('age'))
+    theadth = theadtr.insertCell()
+    theadth.appendChild(document.createTextNode('email'))
 
-        var td = tr.insertCell();
-        td.appendChild(document.createTextNode(cursor.value.name))
-        td.style.border = '1px solid black';
-        td.style.width='150px'
+    var tbody = document.createElement('tbody')
+    tbody.id = 'dyntbody'
 
-        var td = tr.insertCell();
-        td.appendChild(document.createTextNode(cursor.value.age))
-        td.style.border = '1px solid black';
-        td.style.width='50px'
-
-        var td = tr.insertCell();
-        td.appendChild(document.createTextNode(cursor.value.email))
-        td.style.border = '1px solid black';
-        td.style.width='3000px'
-        cursor.continue();
-    }
+    tbl.appendChild(thead)
+    tbl.appendChild(tbody)
     body.appendChild(tbl)
-
 }
