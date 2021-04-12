@@ -26,6 +26,16 @@ request.onerror = function (event) {
 request.onsuccess = function (event) {
     db = request.result;
     console.log("success: " + db);
+    var objectStore = db.transaction("employee").objectStore("employee");
+
+    objectStore.openCursor().onsuccess = function (event) {
+        var cursor = event.target.result;
+
+        if (cursor) {
+            document.getElementById("todos").append("<tr><td>" + cursor.key + "</td><td>" + cursor.value.name + "</td><td>" + cursor.value.age +"</td><td>" + cursor.value.email +"</td></tr>");
+            cursor.continue();
+        }
+    };
 };
 
 request.onupgradeneeded = function (event) {
@@ -56,20 +66,7 @@ function read() {
     };
 }
 
-function readAll() {
-    var objectStore = db.transaction("employee").objectStore("employee");
 
-    objectStore.openCursor().onsuccess = function (event) {
-        var cursor = event.target.result;
-
-        if (cursor) {
-            alert("Name for id " + cursor.key + " is " + cursor.value.name + ",Age: " + cursor.value.age + ", Email: " + cursor.value.email);
-            cursor.continue();
-        } else {
-            alert("No more entries!");
-        }
-    };
-}
 
 function add() {
     var request = db.transaction(["employee"], "readwrite")
