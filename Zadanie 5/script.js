@@ -87,3 +87,42 @@ function tableCreate() {
     tbl.appendChild(tbody)
     body.appendChild(tbl)
 }
+
+function addrow() {
+    var request = db.transaction(["employee"], "readwrite")
+        .objectStore("employee")
+        .add({
+            id: document.getElementById('id').value, name: document.getElementById('name').value,
+            age: document.getElementById('age').value, email: document.getElementById('email').value
+        });
+
+    request.onsuccess = function (event) {
+        var tbody = document.getElementById('dyntbody')
+        var tr = tbody.insertRow();
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('id').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '50px'
+
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('name').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '150px'
+
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('age').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '50px'
+
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('email').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '300px'
+
+    };
+
+    request.onerror = function (event) {
+        alert("Unable to add data\r\n" + document.getElementById('name') + " is aready exist in your database! ");
+    }
+
+}
