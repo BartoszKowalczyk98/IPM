@@ -50,6 +50,16 @@ request.onsuccess = function (event) {
             td.style.border = '1px solid black';
             td.style.minWidth = '300px'
 
+            var td = tr.insertCell();
+            var btnremove = document.createElement('button')
+            btnremove.onclick = function () {
+                remove(document.createTextNode(cursor.key.value));
+            }
+            btnremove.textContent = 'usuń'
+            td.appendChild(btnremove)
+            td.style.border = '1px solid black';
+            td.style.minWidth = '50px'
+
             cursor.continue();
         }
     };
@@ -79,6 +89,8 @@ function tableCreate() {
     theadth.appendChild(document.createTextNode('age'))
     theadth = theadtr.insertCell()
     theadth.appendChild(document.createTextNode('email'))
+    theadtr.insertCell()
+
 
     var tbody = document.createElement('tbody')
     tbody.id = 'dyntbody'
@@ -117,7 +129,17 @@ function addrow() {
         var td = tr.insertCell();
         td.appendChild(document.createTextNode(document.getElementById('email').value))
         td.style.border = '1px solid black';
-        td.style.minWidth = '300px'
+        td.style.minWidth = '200px'
+
+        var td = tr.insertCell();
+        var btnremove = document.createElement('button')
+        btnremove.onclick = function () {
+            remove(document.createTextNode(document.getElementById('id').value));
+        }
+        btnremove.textContent = 'usuń'
+        td.appendChild(btnremove)
+        td.style.border = '1px solid black';
+        td.style.minWidth = '50px'
 
     };
 
@@ -125,4 +147,17 @@ function addrow() {
         alert("Unable to add data\r\n" + document.getElementById('name') + " is aready exist in your database! ");
     }
 
+}
+
+function remove(id) {
+    var request = db.transaction(["employee"], "readwrite")
+        .objectStore("employee")
+        .delete(id);
+
+    request.onsuccess = function (event) {
+        console.log(id)
+    };
+    request.onerror= function (){
+        console.log("error")
+    }
 }
