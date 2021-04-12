@@ -144,7 +144,7 @@ function addrow() {
     };
 
     request.onerror = function (event) {
-        alert("Unable to add data\r\n" + document.getElementById('name') + " is aready exist in your database! ");
+        alert("Unable to add data\r\n" + document.getElementById('id').value + " is aready exist in your database! ");
     }
 
 }
