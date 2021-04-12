@@ -14,27 +14,23 @@ if (!window.indexedDB) {
 
 const employeeData = [
     {id: "00-01", name: "gopal", age: 35, email: "gopal@tutorialspoint.com"},
-    {id: "00-02", name: "prasad", age: 32, email: "prasad@tutorialspoint.com"}
+    {id: "00-02", name: "prasad", age: 32, email: "prasad@tutorialspoint.com"},
+    {id: "00-04", name: "BArtosz", age: 21, email: "kow@tsd.com"}
 ];
 var db;
 var request = window.indexedDB.open("newDatabase", 1);
 
-request.onerror = function (event) {
-    console.log("error: ");
-};
+// document.request.onerror = function (event) {
+//     console.log("error: ");
+// };
 
 request.onsuccess = function (event) {
     db = request.result;
-    console.log("success: " + db);
     var objectStore = db.transaction("employee").objectStore("employee");
 
     objectStore.openCursor().onsuccess = function (event) {
         var cursor = event.target.result;
-
-        if (cursor) {
-            document.getElementById("todos").append("<tr><td>" + cursor.key + "</td><td>" + cursor.value.name + "</td><td>" + cursor.value.age +"</td><td>" + cursor.value.email +"</td></tr>");
-            cursor.continue();
-        }
+        tableCreate(cursor);
     };
 };
 
@@ -47,47 +43,33 @@ request.onupgradeneeded = function (event) {
     }
 }
 
-function read() {
-    var transaction = db.transaction(["employee"]);
-    var objectStore = transaction.objectStore("employee");
-    var request = objectStore.get("00-03");
+function tableCreate(cursor) {
+    var body = document.body,
+        tbl = document.createElement('table');
+    tbl.style.width = '100%';
+    if (cursor) {
+        var tr = tbl.insertRow();
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(cursor.key))
+        td.style.border = '1px solid black';
+        td.style.width='50px'
 
-    request.onerror = function (event) {
-        alert("Unable to retrieve daa from database!");
-    };
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(cursor.value.name))
+        td.style.border = '1px solid black';
+        td.style.width='150px'
 
-    request.onsuccess = function (event) {
-        // Do something with the request.result!
-        if (request.result) {
-            alert("Name: " + request.result.name + ",Age: " + request.result.age + ", Email: " + request.result.email);
-        } else {
-            alert("Kenny couldn't be found in your database!");
-        }
-    };
-}
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(cursor.value.age))
+        td.style.border = '1px solid black';
+        td.style.width='50px'
 
-
-
-function add() {
-    var request = db.transaction(["employee"], "readwrite")
-        .objectStore("employee")
-        .add({id: "00-03", name: "Kenny", age: 19, email: "kenny@planet.org"});
-
-    request.onsuccess = function (event) {
-        alert("Kenny has been added to your database.");
-    };
-
-    request.onerror = function (event) {
-        alert("Unable to add data\r\nKenny is aready exist in your database! ");
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(cursor.value.email))
+        td.style.border = '1px solid black';
+        td.style.width='3000px'
+        cursor.continue();
     }
-}
+    body.appendChild(tbl)
 
-function remove() {
-    var request = db.transaction(["employee"], "readwrite")
-        .objectStore("employee")
-        .delete("00-03");
-
-    request.onsuccess = function (event) {
-        alert("Kenny's entry has been removed from your database.");
-    };
 }
