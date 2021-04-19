@@ -276,6 +276,7 @@ function remove(currElement, id) {
     document.getElementById("mytable").deleteRow(parentRowIndex);
 }
 
+// https://stackoverflow.com/questions/51187477/how-to-filter-a-html-table-using-simple-javascript
 function myFunction() {
     // Declare variables
     var input, filter, table, tr, td, i, txtValue;
@@ -285,15 +286,19 @@ function myFunction() {
     tr = table.getElementsByTagName("tr");
 
     // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
+   for (i = 1; i < tr.length; i++) {
+    // Hide the row initially.
+    tr[i].style.display = "none";
+
+    td = tr[i].getElementsByTagName("td");
+    for (var j = 0; j < td.length; j++) {
+      cell = tr[i].getElementsByTagName("td")[j];
+      if (cell) {
+        if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          break;
         }
+      }
     }
+}
 }
