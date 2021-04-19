@@ -13,27 +13,27 @@
 </head>
 <body>
 
-
+<form>
 <label style="min-width: 50px">Imie: </label>
-<input type="text" id="name" name="name" style="min-width: 100px" placeholder="Jan"><br>
+<input type="text" id="name" name="name" style="min-width: 100px" placeholder="Jan" required><br>
 <label style="min-width: 50px">Nazwisko: </label>
-<input type="text" id="surname" name="surname" style="min-width: 100px" placeholder="Kowalski"><br>
+<input type="text" id="surname" name="surname" style="min-width: 100px" placeholder="Kowalski" required><br>
 <label style="min-width: 50px">age: </label>
-<input type="number" id="age" name="age" style="min-width: 100px" placeholder="30">
+<input type="number" id="age" name="age" style="min-width: 100px" placeholder="30" required>
 <br>
 <label>Numer dowodu: </label>
 <input type="text" id="dowod" name="dowod"
        pattern="[A-Z]{3}[0-9]{6}"
-placeholder="ABC123456">
+placeholder="ABC123456" required>
 <br>
 <label style="min-width: 50px">email: </label>
 <input type="email" id="email" name="email" style="min-width: 100px"
-placeholder="placeholder@domain.com">
+placeholder="placeholder@domain.com" required>
 <br>
 <label>Telefon: </label>
 <input type="tel" id="phone" name="phone"
        pattern="[1-9]{1}[0-9]{8}"
-placeholder="123456789">
+placeholder="123456789" required>
 <br>
 <label>Adres: </label>
 <input type="text" id="adres" name="adres"
@@ -45,6 +45,8 @@ placeholder="123456789">
        placeholder="99-999" required>
 <br>
 <button onclick="addrow()">Dodaj klienta</button>
+<br>
+    </form>
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
 
 </body>

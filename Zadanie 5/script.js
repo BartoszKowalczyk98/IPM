@@ -57,6 +57,7 @@ request.onsuccess = function (event) {
         if (cursor) {
             var tbody = document.getElementById('dyntbody')
             var tr = tbody.insertRow();
+
             var td = tr.insertCell();
             td.appendChild(document.createTextNode(cursor.key))
             td.style.border = '1px solid black';
@@ -105,7 +106,9 @@ request.onsuccess = function (event) {
             var td = tr.insertCell();
             var btnremove = document.createElement('button')
             var id = cursor.key
-            btnremove.onclick = function (){remove(this,id)}
+            btnremove.onclick = function () {
+                remove(this, id)
+            }
             btnremove.textContent = 'usuń'
             td.appendChild(btnremove)
             td.style.border = '1px solid black';
@@ -130,7 +133,7 @@ function tableCreate() {
     var body = document.body;
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
-    tbl.setAttribute("id","mytable")
+    tbl.setAttribute("id", "mytable")
     var thead = document.createElement('thead');
     var theadtr = thead.insertRow()
     var theadth = theadtr.insertCell()
@@ -230,7 +233,7 @@ function addrow() {
         var td = tr.insertCell();
         var btnremove = document.createElement('button')
         btnremove.onclick = function () {
-            remove(document.createTextNode(cursor));
+            remove(this, cursor);
         }
         btnremove.textContent = 'usuń'
         td.appendChild(btnremove)
@@ -252,15 +255,16 @@ function remove(id) {
         .delete(id);
 
     request.onsuccess = function (event) {
-        delete_row('mytable',id)
+        delete_row('mytable', id)
     };
     request.onerror = function () {
         console.log("error")
         return
     }
 }
+
 // https://stackoverflow.com/questions/28184177/dynamically-add-remove-rows-from-html-table/28184255
-function remove(currElement, id ) {
+function remove(currElement, id) {
     var request = db.transaction(["employee"], "readwrite")
         .objectStore("employee")
         .delete(id);
@@ -268,28 +272,28 @@ function remove(currElement, id ) {
         console.log("error")
         return
     }
-     var parentRowIndex = currElement.parentNode.parentNode.rowIndex;
-     document.getElementById("mytable").deleteRow(parentRowIndex);
+    var parentRowIndex = currElement.parentNode.parentNode.rowIndex;
+    document.getElementById("mytable").deleteRow(parentRowIndex);
 }
 
 function myFunction() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("mytable");
+    tr = table.getElementsByTagName("tr");
 
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
     }
-  }
 }
