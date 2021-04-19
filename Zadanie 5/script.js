@@ -104,9 +104,8 @@ request.onsuccess = function (event) {
 
             var td = tr.insertCell();
             var btnremove = document.createElement('button')
-            btnremove.onclick = function () {
-                remove(document.createTextNode(cursor.key.value));
-            }
+            var id = cursor.key
+            btnremove.onclick = function (){remove(this,id)}
             btnremove.textContent = 'usuń'
             td.appendChild(btnremove)
             td.style.border = '1px solid black';
@@ -131,6 +130,7 @@ function tableCreate() {
     var body = document.body;
     var tbl = document.createElement('table');
     tbl.style.width = '100%';
+    tbl.setAttribute("id","mytable")
     var thead = document.createElement('thead');
     var theadtr = thead.insertRow()
     var theadth = theadtr.insertCell()
@@ -166,38 +166,71 @@ function addrow() {
         .objectStore("employee")
         .add({
             name: document.getElementById('name').value,
+            surname: document.getElementById('surname').value,
             age: document.getElementById('age').value,
-            email: document.getElementById('email').value
+            dowod: document.getElementById('dowod').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            adres: document.getElementById('adres').value,
+            kodpocztowy: document.getElementById('kodpocztowy').value
         });
 
     request.onsuccess = function (event) {
         var tbody = document.getElementById('dyntbody')
         var tr = tbody.insertRow();
         var td = tr.insertCell();
-        // console.log()
-        td.appendChild(document.createTextNode(document.getElementById('id').value))
+
+        var cursor = event.target.result;
+        // console.log(cursor)
+        td.appendChild(document.createTextNode(cursor))
         td.style.border = '1px solid black';
         td.style.minWidth = '50px'
-        var td = tr.insertCell();
 
+        var td = tr.insertCell();
         td.appendChild(document.createTextNode(document.getElementById('name').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '150px'
-        var td = tr.insertCell();
 
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('surname').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '150px'
+
+        var td = tr.insertCell();
         td.appendChild(document.createTextNode(document.getElementById('age').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '50px'
+
         var td = tr.insertCell();
-        td.appendChild(document.crea
-        teTextNode(document.getElementById('email').value))
+        td.appendChild(document.createTextNode(document.getElementById('dowod').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '50px'
+
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('email').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
-        var td = tr.insertCell();
 
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('phone').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '200px'
+
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('adres').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '200px'
+
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(document.getElementById('kodpocztowy').value))
+        td.style.border = '1px solid black';
+        td.style.minWidth = '200px'
+
+
+        var td = tr.insertCell();
         var btnremove = document.createElement('button')
         btnremove.onclick = function () {
-            remove(document.createTextNode(document.getElementById('id').value));
+            remove(document.createTextNode(cursor));
         }
         btnremove.textContent = 'usuń'
         td.appendChild(btnremove)
@@ -213,14 +246,50 @@ function addrow() {
 }
 
 function remove(id) {
+
     var request = db.transaction(["employee"], "readwrite")
         .objectStore("employee")
         .delete(id);
 
     request.onsuccess = function (event) {
-        console.log(id)
+        delete_row('mytable',id)
     };
     request.onerror = function () {
         console.log("error")
+        return
     }
+}
+// https://stackoverflow.com/questions/28184177/dynamically-add-remove-rows-from-html-table/28184255
+function remove(currElement, id ) {
+    var request = db.transaction(["employee"], "readwrite")
+        .objectStore("employee")
+        .delete(id);
+    request.onerror = function () {
+        console.log("error")
+        return
+    }
+     var parentRowIndex = currElement.parentNode.parentNode.rowIndex;
+     document.getElementById("mytable").deleteRow(parentRowIndex);
+}
+
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
 }
