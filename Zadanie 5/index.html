@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<form>
+<form onsubmit="addrow()">
 <label style="min-width: 50px">Imie: </label>
 <input type="text" id="name" name="name" style="min-width: 100px" placeholder="Jan" required><br>
 <label style="min-width: 50px">Nazwisko: </label>
@@ -44,7 +44,7 @@ placeholder="123456789" required>
        pattern="[0-9]{2}-[0-9]{3}"
        placeholder="99-999" required>
 <br>
-<button onclick="addrow()">Dodaj klienta</button>
+<button  type="submit">Dodaj klienta</button>
 <br>
     </form>
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
