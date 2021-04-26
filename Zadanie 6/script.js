@@ -498,7 +498,25 @@ function generateData() {
 function updateValue(e) {
     var tr = e.target.parentElement
     var index;
+    random_words = []
     for (index = 0; index < tr.children.length; index++) {
-        console.log(tr.children[index]);
+        random_words.push(tr.children[index].innerHTML)
+    }
+    // console.log(random_words)
+    var request = db.transaction(["employee"], "readwrite")
+        .objectStore("employee")
+        .put({
+            name: random_words[1],
+            surname: random_words[2],
+            age: random_words[3],
+            dowod: random_words[4],
+            email: random_words[5],
+            phone: random_words[6],
+            adres: random_words[7],
+            kodpocztowy: random_words[8]
+        }, +random_words[0]);
+    request.onerror = function (event) {
+        alert("Unable to edit data\r\n" + document.getElementById('id').value );
     }
 }
+
