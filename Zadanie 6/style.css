@@ -1,0 +1,7 @@
+input:invalid{
+    border-color: darkred;
+    text-align: center;
+}
+input:valid{
+    border-color: darkgreen;
+}
