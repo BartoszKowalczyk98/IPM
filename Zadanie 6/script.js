@@ -59,64 +59,62 @@ request.onsuccess = function (event) {
             var tr = tbody.insertRow();
 
             var td = tr.insertCell();
-            td.setAttribute("contenteditable", "true")
-
             td.appendChild(document.createTextNode(cursor.key))
             td.style.border = '1px solid black';
             td.style.minWidth = '50px'
 
             var td = tr.insertCell();
             td.setAttribute("contenteditable", "true")
-
+            td.addEventListener('input', updateValue)
             td.appendChild(document.createTextNode(cursor.value.name))
             td.style.border = '1px solid black';
             td.style.minWidth = '150px'
 
             var td = tr.insertCell();
             td.setAttribute("contenteditable", "true")
-
+            td.addEventListener('input', updateValue)
             td.appendChild(document.createTextNode(cursor.value.surname))
             td.style.border = '1px solid black';
             td.style.minWidth = '150px'
 
             var td = tr.insertCell();
             td.setAttribute("contenteditable", "true")
-
+            td.addEventListener('input', updateValue)
             td.appendChild(document.createTextNode(cursor.value.age))
             td.style.border = '1px solid black';
             td.style.minWidth = '50px'
 
             var td = tr.insertCell();
             td.setAttribute("contenteditable", "true")
-
+            td.addEventListener('input', updateValue)
             td.appendChild(document.createTextNode(cursor.value.dowod))
             td.style.border = '1px solid black';
             td.style.minWidth = '50px'
 
             var td = tr.insertCell();
             td.setAttribute("contenteditable", "true")
-
+            td.addEventListener('input', updateValue)
             td.appendChild(document.createTextNode(cursor.value.email))
             td.style.border = '1px solid black';
             td.style.minWidth = '50px'
 
             var td = tr.insertCell();
             td.setAttribute("contenteditable", "true")
-
+            td.addEventListener('input', updateValue)
             td.appendChild(document.createTextNode(cursor.value.phone))
             td.style.border = '1px solid black';
             td.style.minWidth = '50px'
 
             var td = tr.insertCell();
             td.setAttribute("contenteditable", "true")
-
+            td.addEventListener('input', updateValue)
             td.appendChild(document.createTextNode(cursor.value.adres))
             td.style.border = '1px solid black';
             td.style.minWidth = '50px'
 
             var td = tr.insertCell();
             td.setAttribute("contenteditable", "true")
-
+            td.addEventListener('input', updateValue)
             td.appendChild(document.createTextNode(cursor.value.kodpocztowy))
             td.style.border = '1px solid black';
             td.style.minWidth = '50px'
@@ -210,17 +208,20 @@ function addrow() {
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
         td.appendChild(document.createTextNode(document.getElementById('name').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '150px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
         td.appendChild(document.createTextNode(document.getElementById('surname').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '150px'
 
         var td = tr.insertCell();
+        td.addEventListener('input', updateValue)
         td.setAttribute("contenteditable", "true")
         td.appendChild(document.createTextNode(document.getElementById('age').value))
         td.style.border = '1px solid black';
@@ -228,30 +229,40 @@ function addrow() {
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(document.getElementById('dowod').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '50px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(document.getElementById('email').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(document.getElementById('phone').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(document.getElementById('adres').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(document.getElementById('kodpocztowy').value))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
@@ -402,48 +413,64 @@ function generateData() {
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(random_words[0]))
         td.style.border = '1px solid black';
         td.style.minWidth = '150px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(random_words[1]))
         td.style.border = '1px solid black';
         td.style.minWidth = '150px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(random_words[2]))
         td.style.border = '1px solid black';
         td.style.minWidth = '50px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(random_words[3]))
         td.style.border = '1px solid black';
         td.style.minWidth = '50px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(random_words[4]))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(random_words[5]))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(random_words[6]))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
 
         var td = tr.insertCell();
         td.setAttribute("contenteditable", "true")
+        td.addEventListener('input', updateValue)
+
         td.appendChild(document.createTextNode(random_words[7]))
         td.style.border = '1px solid black';
         td.style.minWidth = '200px'
@@ -466,4 +493,12 @@ function generateData() {
     }
 
 
+}
+
+function updateValue(e) {
+    var tr = e.target.parentElement
+    var index;
+    for (index = 0; index < tr.children.length; index++) {
+        console.log(tr.children[index]);
+    }
 }
