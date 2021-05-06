@@ -516,7 +516,7 @@ function updateValue(e) {
             kodpocztowy: random_words[8]
         }, +random_words[0]);
     request.onerror = function (event) {
-        alert("Unable to edit data\r\n" + document.getElementById('id').value );
+        alert("Unable to edit data\r\n" + document.getElementById('id').value);
     }
 }
 
@@ -543,10 +543,16 @@ function getDbObjects(filter = (object) => true) {
 
 window.onload = () => {
     worker = new Worker('worker.js');
+    worker.onmessage = e => {
+        const message = e.data;
+        document.getElementById("returnedValue").innerHTML = message
+    };
     const triggerWorkerButton = document.getElementById('TriggerWorker');
     triggerWorkerButton.addEventListener('click', (e) => {
         getDbObjects().then((value) => {
             worker.postMessage(JSON.stringify(value))
         });
     });
+
 }
+

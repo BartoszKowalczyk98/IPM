@@ -1,12 +1,17 @@
-onmessage = function (e) {
+var results = [];
 
-    JSON.parse(e.data).forEach(element => {
-        console.log(swapcase(element["name"]))
-        console.log(swapcase(element["surname"]))
-        console.log(swapcase(element["adres"]))
-        console.log(swapcase(element["email"]))
-    });
-    // console.log(JSON.parse(e.data));
+onmessage = function (e) {
+    // console.log(e.data)
+    var temp = JSON.parse(e.data)
+    for (var i = 0; i < temp.length; i++) {
+        temp[i]["name"]=swapcase(temp[i]["name"])
+        temp[i]["surname"]=swapcase(temp[i]["surname"])
+        temp[i]["email"]=swapcase(temp[i]["email"])
+        temp[i]["adres"]=swapcase(temp[i]["adres"])
+        temp[i]["dowod"]=swapcase(temp[i]["dowod"])
+    }
+    // document.getElementById('returnedValue').innerHTML = temp
+    postMessage(JSON.stringify(temp))
 };
 
 
@@ -21,3 +26,4 @@ function swapcase(str) {
     }
     return newWord.join("");
 }
+
