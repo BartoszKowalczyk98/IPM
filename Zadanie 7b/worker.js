@@ -11,7 +11,7 @@ onmessage = function (e) {
         temp[i]["dowod"]=swapcase(temp[i]["dowod"])
     }
     // document.getElementById('returnedValue').innerHTML = temp
-    postMessage(JSON.stringify(temp))
+    self.postMessage(JSON.stringify(temp))
 };
 
 

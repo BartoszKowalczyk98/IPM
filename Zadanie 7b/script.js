@@ -543,26 +543,24 @@ function getDbObjects(filter = (object) => true) {
 
 window.onload = () => {
     worker = new Worker('worker.js');
-    worker.onmessage = e => {
-        const message = e.data;
-        let returned = JSON.parse(message)
-        console.log(returned[returned.length-1])
-        document.getElementById("returnedValue").innerHTML = message
-        document.getElementById("name").value = returned[returned.length-1]["name"]
-        document.getElementById("surname").value = returned[returned.length-1]["surname"]
-        document.getElementById("age").value = returned[returned.length-1]["age"]
-        document.getElementById("dowod").value = returned[returned.length-1]["dowod"]
-        document.getElementById("email").value = returned[returned.length-1]["email"]
-        document.getElementById("phone").value = returned[returned.length-1]["phone"]
-        document.getElementById("adres").value = returned[returned.length-1]["adres"]
-        document.getElementById("kodpocztowy").value = returned[returned.length-1]["kodpocztowy"]
-    };
     const triggerWorkerButton = document.getElementById('TriggerWorker');
     triggerWorkerButton.addEventListener('click', (e) => {
         getDbObjects().then((value) => {
             worker.postMessage(JSON.stringify(value))
         });
     });
-
+    worker.addEventListener('message', fillFormWorker)
 }
 
+function fillFormWorker(e) {
+    const message = e.data;
+    let returned = JSON.parse(message)
+    document.getElementById("name").value = returned[returned.length - 1]["name"]
+    document.getElementById("surname").value = returned[returned.length - 1]["surname"]
+    document.getElementById("age").value = returned[returned.length - 1]["age"]
+    document.getElementById("dowod").value = returned[returned.length - 1]["dowod"]
+    document.getElementById("email").value = returned[returned.length - 1]["email"]
+    document.getElementById("phone").value = returned[returned.length - 1]["phone"]
+    document.getElementById("adres").value = returned[returned.length - 1]["adres"]
+    document.getElementById("kodpocztowy").value = returned[returned.length - 1]["kodpocztowy"]
+}
