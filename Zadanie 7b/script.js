@@ -555,7 +555,6 @@ window.onload = () => {
     imgworker = new Worker('imgworker.js');
     const imgWorkerButton = document.getElementById('imgWorker');
     imgWorkerButton.addEventListener('click', (e) => {
-        // let xd = document.getElementById("formularz").value;
         let xd = document.forms.formularz;
         var formData = new FormData(xd);
         var dict = {
