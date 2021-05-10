@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<form onsubmit="addrow()">
+<form id="formularz" onsubmit="addrow()">
     <label style="min-width: 50px">Imie: </label>
     <input type="text" id="name" name="name" style="min-width: 100px" placeholder="Jan" required><br>
     <label style="min-width: 50px">Nazwisko: </label>
@@ -48,12 +48,20 @@
            pattern="[0-9]{2}-[0-9]{3}"
            placeholder="99-999" required>
     <br>
+    <label>Url obrazka: </label>
+    <input type="url" id="imgurl" name="imgurl" style="min-width: 100px"
+           placeholder="https://i.pinimg.com/originals/19/72/3c/19723c26fba77d49afeb7cf8f25439b9.jpg" >
+    <br>
     <button type="submit">Dodaj klienta</button>
     <br>
 </form>
 
 <button onclick="generateData()">Generuj klienta</button>
 <button id="TriggerWorker">Uruchom webworkera</button>
+<br>
+<button id="imgWorker">Uruchom webworkera do zdjęcia</button>
+<br>
+<div id="resultWorker"></div>
 <br>
 <br>
 <br>

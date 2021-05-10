@@ -541,6 +541,7 @@ function getDbObjects(filter = (object) => true) {
     return ret;
 }
 
+
 window.onload = () => {
     worker = new Worker('worker.js');
     const triggerWorkerButton = document.getElementById('TriggerWorker');
@@ -550,6 +551,29 @@ window.onload = () => {
         });
     });
     worker.addEventListener('message', fillFormWorker)
+
+    imgworker = new Worker('imgworker.js');
+    const imgWorkerButton = document.getElementById('imgWorker');
+    imgWorkerButton.addEventListener('click', (e) => {
+        // let xd = document.getElementById("formularz").value;
+        let xd = document.forms.formularz;
+        var formData = new FormData(xd);
+        var dict = {
+            name: formData.get('name'),
+            surname: formData.get('surname'),
+            age: formData.get('age'),
+            dowod: formData.get('dowod'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            adres: formData.get('adres'),
+            kodpocztowy: formData.get('kodpocztowy'),
+            imgurl: formData.get('imgurl')
+        }
+        imgworker.postMessage(JSON.stringify(dict))
+    });
+    worker.addEventListener('message', fillFormWorker)
+    imgworker.addEventListener('message', tempfun)
+
 }
 
 function fillFormWorker(e) {
@@ -563,4 +587,8 @@ function fillFormWorker(e) {
     document.getElementById("phone").value = returned[returned.length - 1]["phone"]
     document.getElementById("adres").value = returned[returned.length - 1]["adres"]
     document.getElementById("kodpocztowy").value = returned[returned.length - 1]["kodpocztowy"]
+}
+
+function tempfun(e) {
+    console.log(e.data)
 }

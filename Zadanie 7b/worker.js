@@ -1,7 +1,4 @@
-var results = [];
-
 onmessage = function (e) {
-    // console.log(e.data)
     var temp = JSON.parse(e.data)
     for (var i = 0; i < temp.length; i++) {
         temp[i]["name"]=swapcase(temp[i]["name"])
@@ -10,7 +7,6 @@ onmessage = function (e) {
         temp[i]["adres"]=swapcase(temp[i]["adres"])
         temp[i]["dowod"]=swapcase(temp[i]["dowod"])
     }
-    // document.getElementById('returnedValue').innerHTML = temp
     self.postMessage(JSON.stringify(temp))
 };
 
