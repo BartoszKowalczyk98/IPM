@@ -571,7 +571,7 @@ window.onload = () => {
         imgworker.postMessage(JSON.stringify(dict))
     });
     worker.addEventListener('message', fillFormWorker)
-    imgworker.addEventListener('message', tempfun)
+    imgworker.addEventListener('message', drawImageFromUrlAndSetFilter)
 
 }
 
@@ -588,6 +588,11 @@ function fillFormWorker(e) {
     document.getElementById("kodpocztowy").value = returned[returned.length - 1]["kodpocztowy"]
 }
 
-function tempfun(e) {
-    console.log(e.data)
+function drawImageFromUrlAndSetFilter(e) {
+
+    let parsedData = JSON.parse(e.data)
+    let img = document.getElementById("placeForImage")
+    // img.style.backgroundImage = "url("+parsedData["imgurl"]+")"
+    img.src = parsedData["imgurl"]
+    document.getElementById("innerResultWorker").style.backgroundColor = "rgba("+parsedData["R"]+","+parsedData["G"]+","+parsedData["B"]+",0.5)";
 }

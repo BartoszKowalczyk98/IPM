@@ -5,3 +5,22 @@ input:invalid{
 input:valid{
     border-color: darkgreen;
 }
+#resultWorker{
+    position: absolute;
+    top: 18px;
+    left: 500px;
+    width: 400px;
+    height: 500px;
+}
+#placeForImage{
+    width: 400px;
+    height: 400px;
+}
+#innerResultWorker{
+    position: fixed;
+    top: 18px;
+    left: 500px;
+    width: 400px;
+    height: 400px;
+
+}
