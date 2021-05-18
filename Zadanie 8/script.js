@@ -570,6 +570,14 @@ window.onload = () => {
         }
         imgworker.postMessage(JSON.stringify(dict))
     });
+
+    const imgSaveButton = document.getElementById('imgSave');
+    imgSaveButton.addEventListener('click', (e) => {
+        var canvas = document.getElementById("placeForImage")
+        var dataURL = canvas.toDataURL();
+        console.log(dataURL);
+    });
+
     worker.addEventListener('message', fillFormWorker)
     imgworker.addEventListener('message', drawImageFromUrlAndSetFilter)
 
@@ -591,18 +599,16 @@ function fillFormWorker(e) {
 function drawImageFromUrlAndSetFilter(e) {
 
     let parsedData = JSON.parse(e.data)
-    // let img = document.getElementById("placeForImage")
-    // img.style.backgroundImage = "url("+parsedData["imgurl"]+")"
-    // img.src = parsedData["imgurl"]
     var canvas = document.getElementById("placeForImage")
     context = canvas.getContext('2d');
     base_image = new Image();
-    base_image.src = parsedData["imgurl"]
     base_image.onload = function(){
-        canvas.width=400;
-        canvas.height=400;
-        // ctx.drawImage(img,0,0,img.width,img.height,0,0,400,300);
-        context.drawImage(base_image,0,0,base_image.width,base_image.height,0,0,400,400);
+        canvas.width=100;
+        canvas.height=100;
+        context.drawImage(base_image,0,0,base_image.width,base_image.height,0,0,100,100);
     }
+    base_image.crossOrigin = "anonymous";
+    base_image.src = parsedData["imgurl"]
+
     document.getElementById("innerResultWorker").style.backgroundColor = "rgba("+parsedData["R"]+","+parsedData["G"]+","+parsedData["B"]+",0.5)";
 }

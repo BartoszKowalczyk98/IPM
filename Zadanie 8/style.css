@@ -9,18 +9,18 @@ input:valid{
     position: absolute;
     top: 18px;
     left: 500px;
-    width: 400px;
-    height: 500px;
+    width: 100px;
+    height: 100px;
 }
 #placeForImage{
-    width: 400px;
-    height: 400px;
+    width: 100px;
+    height: 100px;
 }
 #innerResultWorker{
     position: fixed;
     top: 18px;
     left: 500px;
-    width: 400px;
-    height: 400px;
+    width: 100px;
+    height: 100px;
 
 }
