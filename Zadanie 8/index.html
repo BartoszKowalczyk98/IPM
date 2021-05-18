@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Zadanie 7 IPM</title>
+    <title>Zadanie 8 IPM</title>
 </head>
 <body>
 
@@ -51,7 +51,7 @@
     <label>Url obrazka: </label>
     <input type="url" id="imgurl" name="imgurl" style="min-width: 100px"
            placeholder="https://i.pinimg.com/originals/19/72/3c/19723c26fba77d49afeb7cf8f25439b9.jpg"
-        pattern="(http[s]*://)([a-zA-Z0-9-]+\.[0-9a-zA-Z]+)[?/]">
+        pattern="((https?:\/\/(?:www\.|(?!www)))?[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|(www\.)?[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|(https?:\/\/(?:www\.|(?!www)))?[a-zA-Z0-9]+\.[^\s]{2,}|(www\.)?[a-zA-Z0-9]+\.[^\s]{2,})" required>
     <br>
     <button type="submit">Dodaj klienta</button>
     <br>
@@ -61,8 +61,12 @@
 <button id="TriggerWorker">Uruchom webworkera</button>
 <br>
 <button id="imgWorker">Uruchom webworkera do zdjęcia</button>
-<button id="imgSave">Zapisz zdjęcie w bazie danych</button>
 <br>
+
+<label>Podaj ID rekordu aby wyświetlić obrazek</label>
+<input id="idObrazka">
+<button id="imgShow">Pokaż obrazek</button>
+
 <div id="resultWorker">
     <canvas id="placeForImage"  crossorigin="anonymous"></canvas>
     <div id="innerResultWorker">

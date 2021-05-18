@@ -21,7 +21,8 @@ const employeeData = [
         email: "gopal@tutorialspoint.com",
         phone: "123456789",
         adres: "UL Piotrkowska 1 Warszawa",
-        kodpocztowy: "99-999"
+        kodpocztowy: "99-999",
+        image: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
     },
     {
         name: "Piotr",
@@ -31,7 +32,8 @@ const employeeData = [
         email: "lemon@tree.com",
         phone: "718920128",
         adres: "UL Wiecowskiego 1 Bydgoszcz",
-        kodpocztowy: "12-456"
+        kodpocztowy: "12-456",
+        image: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
     },
     {
         name: "Jan",
@@ -41,7 +43,8 @@ const employeeData = [
         email: "test@domain.com",
         phone: "987654321",
         adres: "UL Piotrkowska 1 Lodz",
-        kodpocztowy: "11-111"
+        kodpocztowy: "11-111",
+        image: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
     }
 ];
 var db;
@@ -182,6 +185,7 @@ function tableCreate() {
 }
 
 function addrow() {
+    //todo canvas todataurl i dopiero go wrzucac do danych
     var request = db.transaction(["employee"], "readwrite")
         .objectStore("employee")
         .add({
@@ -192,7 +196,8 @@ function addrow() {
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value,
             adres: document.getElementById('adres').value,
-            kodpocztowy: document.getElementById('kodpocztowy').value
+            kodpocztowy: document.getElementById('kodpocztowy').value,
+            image: document.getElementById('imgurl').value
         });
 
     request.onsuccess = function (event) {
@@ -397,7 +402,8 @@ function generateData() {
             email: random_words[4],
             phone: random_words[5],
             adres: random_words[6],
-            kodpocztowy: random_words[7]
+            kodpocztowy: random_words[7],
+            image: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"
         });
 
     request.onsuccess = function (event) {
@@ -571,12 +577,44 @@ window.onload = () => {
         imgworker.postMessage(JSON.stringify(dict))
     });
 
-    const imgSaveButton = document.getElementById('imgSave');
-    imgSaveButton.addEventListener('click', (e) => {
-        var canvas = document.getElementById("placeForImage")
-        var dataURL = canvas.toDataURL();
-        console.log(dataURL);
+    const imgShowButton = document.getElementById('imgShow');
+    imgShowButton.addEventListener('click', (e) => {
+        var id_obrazka = document.getElementById("idObrazka").value;
+        console.log(id_obrazka);
+        // console.log(db.getItem(id_obrazka)["image"]);
+
+        // var request = db.objectStore.get(id_obrazka)["image"];
+        var request = db.transaction(["employee"],"readonly")
+        // create an object store on the transaction
+        var objectStore = request.objectStore("employee");
+
+          // Make a request to get a record by key from the object store
+        var objectStoreRequest = objectStore.get(parseInt(id_obrazka));
+        objectStoreRequest.onsuccess = function(event) {
+            // var myRecord = objectStoreRequest.result;
+            // console.log(objectStoreRequest.result)
+            var canvas = document.getElementById("placeForImage")
+            context = canvas.getContext('2d');
+            base_image = new Image();
+            base_image.onload = function(){
+                canvas.width=100;
+                canvas.height=100;
+                context.drawImage(base_image,0,0,base_image.width,base_image.height,0,0,100,100);
+            }
+            // base_image.crossOrigin = "anonymous";
+
+            if(objectStoreRequest.result["image"] === undefined ){
+                alert("wybrany id rekordu nie posiada obrazka")
+            }
+            else {
+                base_image.src = objectStoreRequest.result["image"];
+            }
+
+        };
     });
+
+
+
 
     worker.addEventListener('message', fillFormWorker)
     imgworker.addEventListener('message', drawImageFromUrlAndSetFilter)
@@ -607,7 +645,7 @@ function drawImageFromUrlAndSetFilter(e) {
         canvas.height=100;
         context.drawImage(base_image,0,0,base_image.width,base_image.height,0,0,100,100);
     }
-    base_image.crossOrigin = "anonymous";
+    // base_image.crossOrigin = "anonymous";
     base_image.src = parsedData["imgurl"]
 
     document.getElementById("innerResultWorker").style.backgroundColor = "rgba("+parsedData["R"]+","+parsedData["G"]+","+parsedData["B"]+",0.5)";
