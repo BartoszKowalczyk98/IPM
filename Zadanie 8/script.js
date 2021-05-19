@@ -184,11 +184,8 @@ function tableCreate() {
     body.appendChild(tbl)
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
- function addrow() {
+async function addrow() {
     var dict = {
         name: document.getElementById('name').value,
         surname: document.getElementById('surname').value,
@@ -201,20 +198,22 @@ function sleep(ms) {
         imgurl: document.getElementById('imgurl').value
     }
     imgworker.postMessage(JSON.stringify(dict))
-    // await sleep(4000)
     let canvas = document.getElementById('placeForImage')
-    console.log('image_to_save')
-    image_to_save = canvas.toDataURL()
-    console.log(image_to_save)
-
+    image_to_save = canvas.toDataURL("image/png")
+    // await new Promise(r => setTimeout(r, 2000));
     context = canvas.getContext('2d');
     base_image = new Image();
     base_image.onload = function () {
         canvas.width = 100;
         canvas.height = 100;
+        let rgba = "rgba(0,0,0,0.5)"
+        context.fillStyle = rgba;
         context.drawImage(base_image, 0, 0, base_image.width, base_image.height, 0, 0, 100, 100);
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
     }
     base_image.src = image_to_save
+    // await new Promise(r => setTimeout(r, 2000));
     var request = db.transaction(["employee"], "readwrite")
         .objectStore("employee")
         .add({
@@ -226,8 +225,8 @@ function sleep(ms) {
             phone: document.getElementById('phone').value,
             adres: document.getElementById('adres').value,
             kodpocztowy: document.getElementById('kodpocztowy').value,
-            // image: document.getElementById('imgurl').value
-            image: image_to_save
+            image: document.getElementById('imgurl').value
+            // image: image_to_save
         });
 
     request.onsuccess = function (event) {
@@ -601,29 +600,18 @@ window.onload = () => {
         // Make a request to get a record by key from the object store
         var objectStoreRequest = objectStore.get(parseInt(id_obrazka));
         objectStoreRequest.onsuccess = function (event) {
-            //
-            // var dict = {
-            //     name: objectStoreRequest.result["name"],
-            //     surname: objectStoreRequest.result["surname"],
-            //     age: objectStoreRequest.result["age"],
-            //     dowod: objectStoreRequest.result["dowod"],
-            //     email: objectStoreRequest.result["email"],
-            //     phone: objectStoreRequest.result["phone"],
-            //     adres: objectStoreRequest.result["adres"],
-            //     kodpocztowy: objectStoreRequest.result["kodpocztowy"],
-            //     imgurl: objectStoreRequest.result["image"]
-            // }
-            // imgworker.postMessage(JSON.stringify(dict))
-
-            var canvas = document.getElementById("placeForImage")
-            context = canvas.getContext('2d');
-            base_image = new Image();
-            base_image.onload = function () {
-                canvas.width = 100;
-                canvas.height = 100;
-                context.drawImage(base_image, 0, 0, base_image.width, base_image.height, 0, 0, 100, 100);
+            var dict = {
+                name: objectStoreRequest.result["name"],
+                surname: objectStoreRequest.result["surname"],
+                age: objectStoreRequest.result["age"],
+                dowod: objectStoreRequest.result["dowod"],
+                email: objectStoreRequest.result["email"],
+                phone: objectStoreRequest.result["phone"],
+                adres: objectStoreRequest.result["adres"],
+                kodpocztowy: objectStoreRequest.result["kodpocztowy"],
+                imgurl: objectStoreRequest.result["image"]
             }
-            base_image.src = objectStoreRequest.result["image"]
+            imgworker.postMessage(JSON.stringify(dict))
         };
     });
 
