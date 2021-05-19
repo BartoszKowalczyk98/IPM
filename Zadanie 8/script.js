@@ -183,10 +183,25 @@ function tableCreate() {
     tbl.appendChild(tbody)
     body.appendChild(tbl)
 }
-
-function addrow() {
-    //todo canvas todataurl i dopiero go wrzucac do danych
-    var request = db.transaction(["employee"], "readwrite")
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+ async function addrow() {
+    var dict = {
+        name: document.getElementById('name').value,
+        surname: document.getElementById('surname').value,
+        age: document.getElementById('age').value,
+        dowod: document.getElementById('dowod').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        adres: document.getElementById('adres').value,
+        kodpocztowy: document.getElementById('kodpocztowy').value,
+        imgurl: document.getElementById('imgurl').value
+    }
+    imgworker.postMessage(JSON.stringify(dict))
+    let canvas = document.getElementById('placeForImage')
+    // image_to_save = canvas.toDataURL("image/jpeg")
+     var request = db.transaction(["employee"], "readwrite")
         .objectStore("employee")
         .add({
             name: document.getElementById('name').value,
@@ -198,6 +213,7 @@ function addrow() {
             adres: document.getElementById('adres').value,
             kodpocztowy: document.getElementById('kodpocztowy').value,
             image: document.getElementById('imgurl').value
+            // image: image_to_save
         });
 
     request.onsuccess = function (event) {
@@ -289,21 +305,6 @@ function addrow() {
         alert("Unable to add data\r\n" + document.getElementById('id').value + " is aready exist in your database! ");
     }
 
-}
-
-function remove(id) {
-
-    var request = db.transaction(["employee"], "readwrite")
-        .objectStore("employee")
-        .delete(id);
-
-    request.onsuccess = function (event) {
-        delete_row('mytable', id)
-    };
-    request.onerror = function () {
-        console.log("error")
-        return
-    }
 }
 
 // https://stackoverflow.com/questions/28184177/dynamically-add-remove-rows-from-html-table/28184255
@@ -586,23 +587,19 @@ window.onload = () => {
           // Make a request to get a record by key from the object store
         var objectStoreRequest = objectStore.get(parseInt(id_obrazka));
         objectStoreRequest.onsuccess = function(event) {
-            var canvas = document.getElementById("placeForImage")
-            context = canvas.getContext('2d');
-            base_image = new Image();
-            base_image.onload = function(){
-                canvas.width=100;
-                canvas.height=100;
-                context.drawImage(base_image,0,0,base_image.width,base_image.height,0,0,100,100);
-            }
-            // base_image.crossOrigin = "anonymous";
 
-            if(objectStoreRequest.result["image"] === undefined ){
-                alert("wybrany id rekordu nie posiada obrazka")
+            var dict = {
+                name: objectStoreRequest.result["name"],
+                surname: objectStoreRequest.result["surname"],
+                age: objectStoreRequest.result["age"],
+                dowod: objectStoreRequest.result["dowod"],
+                email: objectStoreRequest.result["email"],
+                phone: objectStoreRequest.result["phone"],
+                adres: objectStoreRequest.result["adres"],
+                kodpocztowy: objectStoreRequest.result["kodpocztowy"],
+                imgurl: objectStoreRequest.result["image"]
             }
-            else {
-                base_image.src = objectStoreRequest.result["image"];
-            }
-
+            imgworker.postMessage(JSON.stringify(dict))
         };
     });
 
