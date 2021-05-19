@@ -636,10 +636,11 @@ function drawImageFromUrlAndSetFilter(e) {
     base_image.onload = function(){
         canvas.width=100;
         canvas.height=100;
+        let rgba="rgba("+parsedData["R"]+","+parsedData["G"]+","+parsedData["B"]+",0.5)"
+        context.fillStyle = rgba;
+        // base_image.crossOrigin = "anonymous";
         context.drawImage(base_image,0,0,base_image.width,base_image.height,0,0,100,100);
+        context.fillRect(0, 0, canvas.width, canvas.height);
     }
-    base_image.crossOrigin = "anonymous";
     base_image.src = parsedData["imgurl"]
-
-    document.getElementById("innerResultWorker").style.backgroundColor = "rgba("+parsedData["R"]+","+parsedData["G"]+","+parsedData["B"]+",0.5)";
 }
