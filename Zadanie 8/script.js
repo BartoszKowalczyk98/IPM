@@ -199,8 +199,8 @@ async function addrow() {
     }
     imgworker.postMessage(JSON.stringify(dict))
     let canvas = document.getElementById('placeForImage')
-    image_to_save = canvas.toDataURL("image/png")
-    // await new Promise(r => setTimeout(r, 2000));
+    await new Promise(r => setTimeout(r, 2000));
+    image_to_save = canvas.toDataURL("image/jpeg")
     context = canvas.getContext('2d');
     base_image = new Image();
     base_image.onload = function () {
