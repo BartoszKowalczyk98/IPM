@@ -225,8 +225,8 @@ async function addrow() {
             phone: document.getElementById('phone').value,
             adres: document.getElementById('adres').value,
             kodpocztowy: document.getElementById('kodpocztowy').value,
-            image: document.getElementById('imgurl').value
-            // image: image_to_save
+            // image: document.getElementById('imgurl').value
+            image: image_to_save
         });
 
     request.onsuccess = function (event) {
@@ -600,18 +600,29 @@ window.onload = () => {
         // Make a request to get a record by key from the object store
         var objectStoreRequest = objectStore.get(parseInt(id_obrazka));
         objectStoreRequest.onsuccess = function (event) {
-            var dict = {
-                name: objectStoreRequest.result["name"],
-                surname: objectStoreRequest.result["surname"],
-                age: objectStoreRequest.result["age"],
-                dowod: objectStoreRequest.result["dowod"],
-                email: objectStoreRequest.result["email"],
-                phone: objectStoreRequest.result["phone"],
-                adres: objectStoreRequest.result["adres"],
-                kodpocztowy: objectStoreRequest.result["kodpocztowy"],
-                imgurl: objectStoreRequest.result["image"]
+            // var dict = {
+            //     name: objectStoreRequest.result["name"],
+            //     surname: objectStoreRequest.result["surname"],
+            //     age: objectStoreRequest.result["age"],
+            //     dowod: objectStoreRequest.result["dowod"],
+            //     email: objectStoreRequest.result["email"],
+            //     phone: objectStoreRequest.result["phone"],
+            //     adres: objectStoreRequest.result["adres"],
+            //     kodpocztowy: objectStoreRequest.result["kodpocztowy"],
+            //     imgurl: objectStoreRequest.result["image"]
+            // }
+            // imgworker.postMessage(JSON.stringify(dict))
+
+
+            var canvas = document.getElementById("placeForImage")
+            context = canvas.getContext('2d');
+            base_image = new Image();
+            base_image.onload = function () {
+                canvas.width = 100;
+                canvas.height = 100;
+                context.drawImage(base_image, 0, 0, base_image.width, base_image.height, 0, 0, 100, 100);
             }
-            imgworker.postMessage(JSON.stringify(dict))
+            base_image.src = objectStoreRequest.result["image"]
         };
     });
 
@@ -640,12 +651,12 @@ function drawImageFromUrlAndSetFilter(e) {
     var canvas = document.getElementById("placeForImage")
     context = canvas.getContext('2d');
     base_image = new Image();
+    base_image.crossOrigin = "anonymous";
     base_image.onload = function () {
         canvas.width = 100;
         canvas.height = 100;
         let rgba = "rgba(" + parsedData["R"] + "," + parsedData["G"] + "," + parsedData["B"] + ",0.5)"
         context.fillStyle = rgba;
-        // base_image.crossOrigin = "anonymous";
         context.drawImage(base_image, 0, 0, base_image.width, base_image.height, 0, 0, 100, 100);
         context.fillRect(0, 0, canvas.width, canvas.height);
     }
