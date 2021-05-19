@@ -580,19 +580,12 @@ window.onload = () => {
     const imgShowButton = document.getElementById('imgShow');
     imgShowButton.addEventListener('click', (e) => {
         var id_obrazka = document.getElementById("idObrazka").value;
-        console.log(id_obrazka);
-        // console.log(db.getItem(id_obrazka)["image"]);
-
-        // var request = db.objectStore.get(id_obrazka)["image"];
         var request = db.transaction(["employee"],"readonly")
-        // create an object store on the transaction
         var objectStore = request.objectStore("employee");
 
           // Make a request to get a record by key from the object store
         var objectStoreRequest = objectStore.get(parseInt(id_obrazka));
         objectStoreRequest.onsuccess = function(event) {
-            // var myRecord = objectStoreRequest.result;
-            // console.log(objectStoreRequest.result)
             var canvas = document.getElementById("placeForImage")
             context = canvas.getContext('2d');
             base_image = new Image();
@@ -645,7 +638,7 @@ function drawImageFromUrlAndSetFilter(e) {
         canvas.height=100;
         context.drawImage(base_image,0,0,base_image.width,base_image.height,0,0,100,100);
     }
-    // base_image.crossOrigin = "anonymous";
+    base_image.crossOrigin = "anonymous";
     base_image.src = parsedData["imgurl"]
 
     document.getElementById("innerResultWorker").style.backgroundColor = "rgba("+parsedData["R"]+","+parsedData["G"]+","+parsedData["B"]+",0.5)";
