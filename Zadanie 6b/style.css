@@ -1,10 +1,12 @@
 input:invalid{
-    border-color: #ff0000;
+    /*border-color: #ff0000;*/
+    box-shadow: 0 0 4px #ff0000;
     border-width: 3px;
     text-align: center;
 }
 input:valid{
-    border-color: #00ff00;
+    /*border-color: #00ff00;*/
+    box-shadow: 0 0 4px #00ff00;
     border-width: 3px;
     text-align: center;
 }
