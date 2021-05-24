@@ -365,9 +365,9 @@ function generateName() {
 
     let telephone = getRandomInt(100000000, 999999999);
 
-    let colors = ["red", "blue", "green", "yellow", "zielony", "brazowy", "granatowy", "czarny", "black", "white", "bialy", "burguntowy", "scarlet"];
+    let colors = ["Red", "Blue", "Green", "Yellow", "Zielony", "Rrazowy", "Granatowy", "Czarny", "Black", "White", "Bialy", "Burguntowy", "Scarlet"];
 
-    let cities = ["lodz", "warszawa", "london", "Warsaw", "Bydgoszcz", "belgrade", "Krym", "Moskwa", "Krakow", "Nowy Sącz", "Moszczenica", "Piotrków", "Głowno", "Ostrowiec"]
+    let cities = ["Lodz", "Warszawa", "london", "Warsaw", "Bydgoszcz", "Belgrade", "Krym", "Moskwa", "Krakow", "Nowy Sącz", "Moszczenica", "Piotrków", "Głowno", "Ostrowiec"]
 
     let pier_kod_pocz = getRandomInt(10, 99)
     let drug_kod_pocz = getRandomInt(100, 999)
@@ -377,7 +377,7 @@ function generateName() {
     let surname = capFirst(name2[getRandomInt(0, name2.length + 1)]);
     let result_email = email[getRandomInt(0, email.length + 1)];
     let dowod = text_for_dowod[getRandomInt(0, text_for_dowod.length + 1)] + numer_for_dowod.toString()
-    let adres = "ul. " + capFirst(colors[getRandomInt(0, colors.length + 1)]) + " " + getRandomInt(1, 200).toString() + " " + capFirst(cities[getRandomInt(0, cities.length + 1)])
+    let adres = "ul. " + colors[getRandomInt(0, colors.length + 1)] + " " + getRandomInt(1, 200).toString() + " " + cities[getRandomInt(0, cities.length + 1)]
     let kod_pocztowy = pier_kod_pocz.toString() + "-" + drug_kod_pocz.toString()
     var result = [name, surname, age, dowod, result_email, telephone, adres, kod_pocztowy]
     return result;
@@ -387,6 +387,7 @@ function generateName() {
 function generateData() {
 
     var random_words = generateName()
+    console.log(random_words)
     document.getElementById("name").value = random_words[0]
     document.getElementById("surname").value = random_words[1]
     document.getElementById("age").value = random_words[2]
