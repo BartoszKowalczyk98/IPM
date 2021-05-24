@@ -387,7 +387,7 @@ function generateName() {
 function generateData() {
 
     var random_words = generateName()
-    console.log(random_words)
+    // console.log(random_words)
     document.getElementById("name").value = random_words[0]
     document.getElementById("surname").value = random_words[1]
     document.getElementById("age").value = random_words[2]
