@@ -1,7 +1,10 @@
 input:invalid{
-    border-color: darkred;
+    border-color: #ff0000;
+    border-width: 3px;
     text-align: center;
 }
 input:valid{
-    border-color: darkgreen;
+    border-color: #00ff00;
+    border-width: 3px;
+    text-align: center;
 }
