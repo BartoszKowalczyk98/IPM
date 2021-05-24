@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset = utf-8"/>
+
+    <!--
+       "inspiracja" do zadania
+       https://www.tutorialspoint.com/html5/html5_indexeddb.htm
+       -->
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Zadanie 6 IPM</title>
+</head>
+<body>
+
+<form">
+    <label style="min-width: 50px">Imie: </label>
+    <input type="text" id="name" name="name" style="min-width: 100px" placeholder="Jan" required><br>
+    <label style="min-width: 50px">Nazwisko: </label>
+    <input type="text" id="surname" name="surname" style="min-width: 100px" placeholder="Kowalski" required><br>
+    <label style="min-width: 50px">age: </label>
+    <input type="number" id="age" name="age" style="min-width: 100px" placeholder="30" required>
+    <br>
+    <label>Numer dowodu: </label>
+    <input type="text" id="dowod" name="dowod"
+           pattern="[A-Z]{3}[0-9]{6}"
+           placeholder="ABC123456" required>
+    <br>
+    <label style="min-width: 50px">email: </label>
+    <input type="email" id="email" name="email" style="min-width: 100px"
+           placeholder="placeholder@domain.com" required>
+    <br>
+    <label>Telefon: </label>
+    <input type="tel" id="phone" name="phone"
+           pattern="[1-9]{1}[0-9]{8}"
+           placeholder="123456789" required>
+    <br>
+    <label>Adres: </label>
+    <input type="text" id="adres" name="adres"
+           placeholder="ul. Piotrkowska 1 Warszawa" required>
+    <br>
+    <label>Kod pocztowy: </label>
+    <input type="text" id="kodpocztowy" name="kodpocztowy"
+           pattern="[0-9]{2}-[0-9]{3}"
+           placeholder="99-999" required>
+    <br>
+    <button onclick="addrow()">Dodaj klienta</button>
+    <br>
+</form>
+
+<button onclick="generateData()">Generuj klienta</button>
+<br>
+<br>
+<br>
+<label>Wyszukaj: </label>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..">
+
+</body>
+</html>
