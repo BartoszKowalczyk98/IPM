@@ -127,6 +127,13 @@ request.onsuccess = function (event) {
             }
             btnremove.textContent = 'usuń'
             td.appendChild(btnremove)
+            var btnfaktura = document.createElement('button')
+            btnfaktura.onclick = function () {
+                generujFakture(this, id)
+            }
+            btnfaktura.textContent = 'generuj fakture'
+            td.appendChild(btnfaktura)
+
             td.style.border = '1px solid black';
             td.style.minWidth = '30px'
 
@@ -144,6 +151,16 @@ request.onupgradeneeded = function (event) {
     }
 }
 
+function generujFakture(currElement, id) {
+    var request = db.transaction(["employee"], "readonly")
+
+    var objectStore = request.objectStore("employee");
+
+    var objectStoreRequest = objectStore.get(parseInt(id));
+    objectStoreRequest.onsuccess = function (event) {
+        console.log(objectStoreRequest.result)
+    };
+}
 
 function tableCreate() {
 
@@ -275,6 +292,13 @@ function addrow() {
         }
         btnremove.textContent = 'usuń'
         td.appendChild(btnremove)
+        var btnfaktura = document.createElement('button')
+        btnfaktura.onclick = function () {
+            // remove(this, cursor);
+            console.log("bepis")
+        }
+        btnfaktura.textContent = 'generuj fakture'
+        td.appendChild(btnfaktura)
         td.style.border = '1px solid black';
         td.style.minWidth = '50px'
 
@@ -286,20 +310,6 @@ function addrow() {
 
 }
 
-function remove(id) {
-
-    var request = db.transaction(["employee"], "readwrite")
-        .objectStore("employee")
-        .delete(id);
-
-    request.onsuccess = function (event) {
-        delete_row('mytable', id)
-    };
-    request.onerror = function () {
-        console.log("error")
-        return
-    }
-}
 
 // https://stackoverflow.com/questions/28184177/dynamically-add-remove-rows-from-html-table/28184255
 function remove(currElement, id) {
@@ -341,7 +351,6 @@ function myFunction() {
     }
 }
 
-
 function capFirst(string) {
     return string[0].toUpperCase() + string.slice(1);
 }
@@ -373,11 +382,11 @@ function generateName() {
     let drug_kod_pocz = getRandomInt(100, 999)
 
 
-    let name = capFirst(name1[getRandomInt(0, name1.length )]);
-    let surname = capFirst(name2[getRandomInt(0, name2.length )]);
-    let result_email = email[getRandomInt(0, email.length )];
+    let name = capFirst(name1[getRandomInt(0, name1.length)]);
+    let surname = capFirst(name2[getRandomInt(0, name2.length)]);
+    let result_email = email[getRandomInt(0, email.length)];
     let dowod = text_for_dowod[getRandomInt(0, text_for_dowod.length)] + numer_for_dowod.toString()
-    let adres = "ul. " + colors[getRandomInt(0, colors.length )] + " " + getRandomInt(1, 200).toString() + " " + cities[getRandomInt(0, cities.length )]
+    let adres = "ul. " + colors[getRandomInt(0, colors.length)] + " " + getRandomInt(1, 200).toString() + " " + cities[getRandomInt(0, cities.length)]
     let kod_pocztowy = pier_kod_pocz.toString() + "-" + drug_kod_pocz.toString()
     var result = [name, surname, age, dowod, result_email, telephone, adres, kod_pocztowy]
     return result;
@@ -387,7 +396,6 @@ function generateName() {
 function generateData() {
 
     var random_words = generateName()
-    // console.log(random_words)
     document.getElementById("name").value = random_words[0]
     document.getElementById("surname").value = random_words[1]
     document.getElementById("age").value = random_words[2]
@@ -396,112 +404,6 @@ function generateData() {
     document.getElementById("phone").value = random_words[5]
     document.getElementById("adres").value = random_words[6]
     document.getElementById("kodpocztowy").value = random_words[7]
-    // var request = db.transaction(["employee"], "readwrite")
-    //     .objectStore("employee")
-    //     .add({
-    //         name: random_words[0],
-    //         surname: random_words[1],
-    //         age: random_words[2],
-    //         dowod: random_words[3],
-    //         email: random_words[4],
-    //         phone: random_words[5],
-    //         adres: random_words[6],
-    //         kodpocztowy: random_words[7]
-    //     });
-
-    request.onsuccess = function (event) {
-        var tbody = document.getElementById('dyntbody')
-        var tr = tbody.insertRow();
-        var td = tr.insertCell();
-
-        var cursor = event.target.result;
-
-        td.appendChild(document.createTextNode(cursor))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '50px'
-
-        var td = tr.insertCell();
-        td.setAttribute("contenteditable", "true")
-        td.addEventListener('input', updateValue)
-
-        td.appendChild(document.createTextNode(random_words[0]))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '150px'
-
-        var td = tr.insertCell();
-        td.setAttribute("contenteditable", "true")
-        td.addEventListener('input', updateValue)
-
-        td.appendChild(document.createTextNode(random_words[1]))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '150px'
-
-        var td = tr.insertCell();
-        td.setAttribute("contenteditable", "true")
-        td.addEventListener('input', updateValue)
-
-        td.appendChild(document.createTextNode(random_words[2]))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '50px'
-
-        var td = tr.insertCell();
-        td.setAttribute("contenteditable", "true")
-        td.addEventListener('input', updateValue)
-
-        td.appendChild(document.createTextNode(random_words[3]))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '50px'
-
-        var td = tr.insertCell();
-        td.setAttribute("contenteditable", "true")
-        td.addEventListener('input', updateValue)
-
-        td.appendChild(document.createTextNode(random_words[4]))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '200px'
-
-        var td = tr.insertCell();
-        td.setAttribute("contenteditable", "true")
-        td.addEventListener('input', updateValue)
-
-        td.appendChild(document.createTextNode(random_words[5]))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '200px'
-
-        var td = tr.insertCell();
-        td.setAttribute("contenteditable", "true")
-        td.addEventListener('input', updateValue)
-
-        td.appendChild(document.createTextNode(random_words[6]))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '200px'
-
-        var td = tr.insertCell();
-        td.setAttribute("contenteditable", "true")
-        td.addEventListener('input', updateValue)
-
-        td.appendChild(document.createTextNode(random_words[7]))
-        td.style.border = '1px solid black';
-        td.style.minWidth = '200px'
-
-
-        var td = tr.insertCell();
-        var btnremove = document.createElement('button')
-        btnremove.onclick = function () {
-            remove(this, cursor);
-        }
-        btnremove.textContent = 'usuń'
-        td.appendChild(btnremove)
-        td.style.border = '1px solid black';
-        td.style.minWidth = '50px'
-
-    };
-
-    request.onerror = function (event) {
-        alert("Unable to add data\r\n" + document.getElementById('id').value + " is aready exist in your database! ");
-    }
-
-
 }
 
 function updateValue(e) {
@@ -525,6 +427,6 @@ function updateValue(e) {
             kodpocztowy: random_words[8]
         }, +random_words[0]);
     request.onerror = function (event) {
-        alert("Unable to edit data\r\n" + document.getElementById('id').value );
+        alert("Unable to edit data\r\n" + document.getElementById('id').value);
     }
 }
