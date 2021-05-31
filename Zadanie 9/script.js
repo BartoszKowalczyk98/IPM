@@ -152,14 +152,40 @@ request.onupgradeneeded = function (event) {
 }
 
 function generujFakture(currElement, id) {
-    var request = db.transaction(["employee"], "readonly")
 
+    var produkty = document.getElementById("produkty");
+    // console.log(produkty.value)
+    if (produkty.value == 0) {
+        alert("Wybierz produkt do zakupu!")
+        return
+    }
+
+    var request = db.transaction(["employee"], "readonly")
     var objectStore = request.objectStore("employee");
 
     var objectStoreRequest = objectStore.get(parseInt(id));
     objectStoreRequest.onsuccess = function (event) {
-        console.log(objectStoreRequest.result)
+        // console.log(objectStoreRequest.result)
+        // var bodytoreplace =
+        //https://stackoverflow.com/questions/2004555/how-can-i-make-javascript-make-produce-new-page?fbclid=IwAR0P8mlegTpf_nII4z1BP0xBkB26fnivNH1XcsNBk911fThjunNXJU5Kq8k
+        var opened = window.open("");
+        // var doc = opened.document
+        // console.log(opened.document)
+        // doc.getElementById("name").value =objectStoreRequest.result.name
+        opened.document.write("<html><head><title>Wygenerowana Faktura</title></head><body><header>Faktura do zakupu</header><br>" +
+            "<div id=\"placefordata\">\n" +
+            "    <label>IMIE: </label><label id=\"name\">"+objectStoreRequest.result.name+"</label><br>\n" +
+            "    <label>NAZWISKO: </label><label id=\"surname\">"+objectStoreRequest.result.surname+"</label><br>\n" +
+            "    <label>WIEK: </label><label id=\"age\">"+objectStoreRequest.result.age+"</label><br>\n" +
+            "    <label>NR DOWODU: </label><label id=\"dowod\">"+objectStoreRequest.result.dowod+"</label><br>\n" +
+            "    <label>EMAIL: </label><label id=\"email\">"+objectStoreRequest.result.email+"</label><br>\n" +
+            "    <label>NR TELEFONU: </label><label id=\"phone\">"+objectStoreRequest.result.phone+"</label><br>\n" +
+            "    <label>ADRES: </label><label id=\"adres\">"+objectStoreRequest.result.adres+"</label><br>\n" +
+            "    <label>KOD POCZTOWY: </label><label id=\"kodpocztowy\">"+objectStoreRequest.result.kodpocztowy+"</label><br>\n" +
+            "    <label>Kupuje produkt: </label><label id=\"produkt\">"+objectStoreRequest.result.name+"</label><br>\n" +
+            "</div></body></html>")
     };
+
 }
 
 function tableCreate() {
