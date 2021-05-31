@@ -165,13 +165,8 @@ function generujFakture(currElement, id) {
 
     var objectStoreRequest = objectStore.get(parseInt(id));
     objectStoreRequest.onsuccess = function (event) {
-        // console.log(objectStoreRequest.result)
-        // var bodytoreplace =
         //https://stackoverflow.com/questions/2004555/how-can-i-make-javascript-make-produce-new-page?fbclid=IwAR0P8mlegTpf_nII4z1BP0xBkB26fnivNH1XcsNBk911fThjunNXJU5Kq8k
         var opened = window.open("");
-        // var doc = opened.document
-        // console.log(opened.document)
-        // doc.getElementById("name").value =objectStoreRequest.result.name
         opened.document.write("<html><head><title>Wygenerowana Faktura</title></head><body><header>Faktura do zakupu</header><br>" +
             "<div id=\"placefordata\">\n" +
             "    <label>IMIE: </label><label id=\"name\">"+objectStoreRequest.result.name+"</label><br>\n" +
@@ -182,7 +177,7 @@ function generujFakture(currElement, id) {
             "    <label>NR TELEFONU: </label><label id=\"phone\">"+objectStoreRequest.result.phone+"</label><br>\n" +
             "    <label>ADRES: </label><label id=\"adres\">"+objectStoreRequest.result.adres+"</label><br>\n" +
             "    <label>KOD POCZTOWY: </label><label id=\"kodpocztowy\">"+objectStoreRequest.result.kodpocztowy+"</label><br>\n" +
-            "    <label>Kupuje produkt: </label><label id=\"produkt\">"+objectStoreRequest.result.name+"</label><br>\n" +
+            "    <label>Kupuje produkt: </label><label id=\"produkt\">"+produkty.options[produkty.selectedIndex].text+"</label><br>\n" +
             "</div></body></html>")
     };
 
